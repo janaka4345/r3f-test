@@ -1,17 +1,15 @@
 "use client";
 import { Canvas } from "@react-three/fiber";
-// import Experence from "./3d/Experence";
+import Experence from "../3d/Experence";
+import { Perf } from "r3f-perf";
+
+import { OrbitControls } from "@react-three/drei";
 export default function Home() {
   return (
-    <>
-      <Canvas>
-        <ambientLight intensity={0.1} />
-        <directionalLight color="red" position={[0, 0, 5]} />
-        <mesh>
-          <boxGeometry />
-          <meshStandardMaterial />
-        </mesh>
-      </Canvas>
-    </>
+    <Canvas>
+      <Perf />
+      <OrbitControls />
+      <Experence />
+    </Canvas>
   );
 }
