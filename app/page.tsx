@@ -7,7 +7,7 @@ import { OrbitControls } from "@react-three/drei";
 export default function Home() {
   return (
     <Canvas>
-      <Perf />
+      <Perf position='top-left'/>
       <OrbitControls />
       <Experence />
     </Canvas>
