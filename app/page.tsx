@@ -6,11 +6,10 @@ import Experence from "../3d/Experence";
 import { OrbitControls } from "@react-three/drei";
 export default function Home() {
   return (
-    <Canvas frameloop="demand">
+    <Canvas>
       {/* <Perf position="top-left" /> */}
       <OrbitControls />
       <Experence />
-      
     </Canvas>
   );
 }
