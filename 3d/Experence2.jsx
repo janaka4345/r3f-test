@@ -13,7 +13,10 @@ export default function Experence2() {
       <Suspense fallback={<Placeholder scale={2} />}>
         <Hamberger />
       </Suspense>
-      <Fox />
+
+      <Suspense fallback={<Placeholder scale={2} />}>
+        <Fox />
+      </Suspense>
       {/* <Hamberger2 scale={0.5} /> */}
     </>
   );
