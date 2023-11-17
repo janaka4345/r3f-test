@@ -4,7 +4,8 @@ export default function Fox() {
   console.log(FoxModel);
   return (
     <>
-      <primitive object={FoxModel.scene} scale={0.03} position={[-2, 0, 0]} />
+      <primitive object={FoxModel.scene} scale={0.03} position={[-3, 0, 0]} />
     </>
   );
 }
+useGLTF.preload("./Fox.gltf");

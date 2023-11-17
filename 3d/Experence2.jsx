@@ -1,15 +1,20 @@
+import { Suspense } from "react";
 import Plane from "./Plane";
+import Placeholder from "./Placeholder";
 import Hamberger from "./Hamberger";
+// import Hamberger2 from "./Hamberger2";
 import Fox from "./Fox";
-import { useGLTF } from "@react-three/drei";
 export default function Experence2() {
   return (
     <>
       <ambientLight intensity={0.5} />
       <directionalLight position={[1, 2, 3]} intensity={1.5} />
       <Plane />
-      <Hamberger />
+      <Suspense fallback={<Placeholder scale={2} />}>
+        <Hamberger />
+      </Suspense>
       <Fox />
+      {/* <Hamberger2 scale={0.5} /> */}
     </>
   );
 }
