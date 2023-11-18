@@ -12,7 +12,7 @@ export default function ShaderExperience() {
       {/* <Plane /> */}
       <Center>
         <PlaneShader />
-        <Sparkles size={6} speed={0.2} />
+        {/* <Sparkles size={6} speed={0.2} /> */}
       </Center>
     </>
   );
