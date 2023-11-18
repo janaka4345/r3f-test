@@ -9,7 +9,9 @@ import { OrbitControls } from "@react-three/drei";
 export default function Home() {
   return (
     <Suspense fallback={<h1>loading</h1>}>
-      <Canvas>
+      <Canvas camera={{ position: [0, 6, 14], fov: 42 }}>
+        <color attach="background" args={["#dbecfb"]} />
+        <fog attach="fog" args={["#dbecfb", 15, 40]} />
         {/* <Perf position="top-left" /> */}
         <OrbitControls />
         {/* <Experence /> */}
