@@ -1,21 +1,23 @@
-import { DoubleSide } from "three";
+import {AdditiveBlending} from "three";
 import { useMemo, useEffect, useRef } from "react";
-import { extend } from '@react-three/fiber
-import { shaderMaterial } from "@react-three/drei";
+import { extend,useFrame } from '@react-three/fiber
+import { shaderMaterial,Center } from "@react-three/drei";
 
 const FireflyShaderMaterial= shaderMaterial( {
   uTime: 0.0,
   uPixelRatio:Math.min(window.devicePixelRatio,2),
 },`
 uniform float uPixelRatio;
+uniform float uTime;
 void main(){
   vec4 modelPosition = modelMatrix * vec4(position, 1.0);
+  modelPosition.y+=sin(uTime + modelPosition.x*100.0);
             vec4 viewPosition = viewMatrix * modelPosition;
             vec4 projectionPosition = projectionMatrix * viewPosition;
 
             gl_Position = projectionPosition;
             gl_PointSize=40.0*uPixelRatio;
-            // gl_PointSize*=(1.0 / -viewPosition.z);
+            gl_PointSize*=(10.0 / -viewPosition.z);
 }
 `,`
 void main(){
@@ -35,15 +37,18 @@ export default function Particles() {
   const positions = useMemo(() => {
     const positionsArray = new Float32Array(fireflycount * 3);
     for (let index = 0; index < positionsArray.length; index++) {
-      positionsArray[index * 3 + 0] = Math.random() * 4;
-      positionsArray[index * 3 + 1] = Math.random() * 4;
-      positionsArray[index * 3 + 2] = Math.random() * 4;
+      positionsArray[index * 3 + 0] = Math.random() * 10;
+      positionsArray[index * 3 + 1] = Math.random() * 10;
+      positionsArray[index * 3 + 2] = Math.random() * 10;
     }
     return positionsArray;
   }, []);
-
+  useFrame((state,delta)=>{
+      geometryRef.current.uTime+=delta
+  })
   // console.log(positions);
   return (
+    <Center>
     <points>
       <bufferGeometry>
         <bufferAttribute
@@ -53,8 +58,14 @@ export default function Particles() {
           array={positions}
         />
       </bufferGeometry>
-      {/* <pointsMaterial size={0.2} sizeAttenuation={true} color={"red"} /> */}
-<fireflyShaderMaterial transparent={true}/>
+      
+      <fireflyShaderMaterial 
+      ref={geometryRef}
+      transparent={true} 
+      depthWrite={false} 
+      blending={AdditiveBlending}
+      />
     </points>
+    </Center>
   );
 }
