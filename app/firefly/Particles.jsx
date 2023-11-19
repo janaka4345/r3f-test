@@ -5,20 +5,27 @@ import { shaderMaterial } from "@react-three/drei";
 
 const FireflyShaderMaterial= shaderMaterial( {
   uTime: 0.0,
+  uPixelRatio:Math.min(window.devicePixelRatio,2),
 },`
+uniform float uPixelRatio;
 void main(){
   vec4 modelPosition = modelMatrix * vec4(position, 1.0);
             vec4 viewPosition = viewMatrix * modelPosition;
             vec4 projectionPosition = projectionMatrix * viewPosition;
 
             gl_Position = projectionPosition;
-            gl_PointSize=10.0;
+            gl_PointSize=40.0*uPixelRatio;
+            // gl_PointSize*=(1.0 / -viewPosition.z);
 }
 `,`
 void main(){
-  gl_FragColor=vec4(0.0,0.0,1.0,1.0);
+  float distanceToCenter=distance(gl_PointCoord,vec2(0.5));
+  float strength= (0.05/distanceToCenter)-(0.05*2.0);
+  gl_FragColor=vec4(1.0,1.0,1.0,strength);
 }
-`)
+`,
+// {}
+)
 
 extend({FireflyShaderMaterial})
 
@@ -47,7 +54,7 @@ export default function Particles() {
         />
       </bufferGeometry>
       {/* <pointsMaterial size={0.2} sizeAttenuation={true} color={"red"} /> */}
-<fireflyShaderMaterial/>
+<fireflyShaderMaterial transparent={true}/>
     </points>
   );
 }
